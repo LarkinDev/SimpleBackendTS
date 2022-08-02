@@ -1,0 +1,23 @@
+version: "2.1"
+
+services:
+  api:
+    build:
+      dockerfile: Dockerfile
+      context: ./api
+    command: npm run start:debug
+    depends_on: 
+      - postgres
+    environment:
+      DATABASE_URL: postgres://docker:docker@postgres:5432/db
+      PORT: 3000
+    ports:
+      - 3000:3000
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_USER: docker
+      POSTGRES_PASSWORD: docker
+      POSTGRES_DB: db
+    ports:
+      - 5432:5432
